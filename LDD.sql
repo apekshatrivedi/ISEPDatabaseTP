@@ -21,5 +21,34 @@ FOREIGN KEY (EMPNO)
 REFERENCES EMP(EMPNO)
 ON DELETE CASCADE;
 
+--• Define a sequence to make easy creation of a new dependent. This sequence has to start with the value 8000 and an increment gap of 1.
+
+--The instruction to create a sequence:
+--CREATE SEQUENCE ma_sequence [START WITH] ... [INCREMENT BY]...
+--[MINVALUE]...[MAXVALUE]...[CYCLE|NOCYCLE];
+
+
+
+CREATE SEQUENCE MA_SEQUENCE
+START WITH 8000
+INCREMENT BY 1;
+
+--• Add some tuples to the DEPENDENT table using the previous sequence Use
+ma_sequence.NEXTVAL to get the values from the sequence
+
+INSERT INTO EMP VALUES
+(MA_SEQUENCE.NEXTVAL, 'appy', 'trivedi', 'student', 7839,
+TO_DATE ('24-02-1996', 'DD-MM-YYYY'), 1167, NULL, '0699999999', 30,'0623423423');
+INSERT INTO DEPENDENTS VALUES (1, 'ENGINEER', 'PARIS',
+MA_SEQUENCE.CURRVAL);
+
+INSERT INTO EMP VALUES
+(MA_SEQUENCE.NEXTVAL, 'mainak', 'mishra', 'student', 7698,
+TO_DATE ('25-09-1995', 'DD-MM-YYYY'), 1169, NULL, '0600000000', 30,'0699009988');
+INSERT INTO DEPENDENTS VALUES (2, 'ENGINEER', 'PARIS',
+MA_SEQUENCE.CURRVAL);
+
+
+
 
 
